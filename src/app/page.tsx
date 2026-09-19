@@ -1,6 +1,6 @@
 'use client'
 
-import { api } from '@/lib/api-client'
+import { client } from '@/lib/api-client'
 import { useMutation } from '@tanstack/react-query'
 import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
@@ -54,7 +54,7 @@ export default function Home() {
 
   const { mutate: createRoom } = useMutation({
     mutationFn: async () => {
-      const res = await api.room.create.post()
+      const res = await client.room.create.post()
 
       if (res.status === 200) {
         router.push(`/room/${res.data?.roomId}`)
