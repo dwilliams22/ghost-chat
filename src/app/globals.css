@@ -24,3 +24,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-jetbrains-mono);
 }
+
+button {
+  cursor: pointer;
+}
