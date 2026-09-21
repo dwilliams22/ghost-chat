@@ -1,7 +1,7 @@
 'use client'
 
 import { useUsername } from '@/hooks/use-username'
-import { client } from '@/lib/api-client'
+import { api } from '@/lib/api-server'
 import { useRealtime } from '@/lib/realtime-client'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
@@ -30,7 +30,7 @@ const Page = () => {
   const { data: ttlData } = useQuery({
     queryKey: ['ttl', roomId],
     queryFn: async () => {
-      const res = await client.room.ttl.get({ query: { roomId } })
+      const res = await api.room.ttl.get({ query: { roomId } })
 
       return res.data
     },
@@ -68,7 +68,7 @@ const Page = () => {
   const { data: messages, refetch } = useQuery({
     queryKey: ['messages', roomId],
     queryFn: async () => {
-      const res = await client.messages.get({
+      const res = await api.messages.get({
         query: { roomId },
       })
 
@@ -78,7 +78,7 @@ const Page = () => {
 
   const { mutate: sendMessage, isPending } = useMutation({
     mutationFn: async ({ text }: { text: string }) => {
-      await client.messages.post(
+      await api.messages.post(
         {
           sender: username,
           text,
@@ -106,7 +106,7 @@ const Page = () => {
 
   const { mutate: destroyRoom } = useMutation({
     mutationFn: async () => {
-      await client.room.delete(null, { query: { roomId } })
+      await api.room.delete(null, { query: { roomId } })
     },
   })
 
