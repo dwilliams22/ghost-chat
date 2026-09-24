@@ -1,4 +1,11 @@
 import { treaty } from '@elysia/eden'
 import type { app } from '../app/api/[[...slugs]]/route'
 
-export const client = treaty<typeof app>('http://localhost:3000').api
+const baseUrl =
+  typeof window !== 'undefined'
+    ? window.location.origin
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000'
+
+export const client = treaty<typeof app>(baseUrl).api

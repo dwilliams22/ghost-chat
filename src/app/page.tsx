@@ -1,7 +1,7 @@
 'use client'
 
 import { useUsername } from '@/hooks/use-username'
-import { api } from '@/lib/api-server'
+import { client } from '@/lib/api-client'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
@@ -23,7 +23,7 @@ function Lobby() {
 
   const { mutate: createRoom } = useMutation({
     mutationFn: async () => {
-      const res = await api.room.create.post()
+      const res = await client.room.create.post()
 
       if (res.status === 200) {
         router.push(`/room/${res.data?.roomId}`)
